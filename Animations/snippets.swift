@@ -1,39 +1,12 @@
 //
-//  ContentView.swift
+//  snippets.swift
 //  Animations
 //
-//  Created by Lanre ESAN on 31/03/2020.
+//  Created by Lanre ESAN on 03/04/2020.
 //  Copyright © 2020 tomisinesan.com. All rights reserved.
 //
 
-import SwiftUI
-struct ContentView: View {
-  @State private var isShowingRed = false
-    
-    var body: some View {
-         VStack {
-              Button("Tap Me") {
-               withAnimation {
-                    self.isShowingRed.toggle()
-                }
-              }
-
-          if isShowingRed {
-                  Rectangle()
-                      .fill(Color.red)
-                      .frame(width: 200, height: 200)
-                    .transition(.scale)
-              }
-          }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-
+import Foundation
 
 /*
  struct ContentView: View {
@@ -54,6 +27,7 @@ struct ContentView_Previews: PreviewProvider {
  }
  */
 
+
 /*
  struct ContentView: View {
      @State private var animationAmount: CGFloat = 1
@@ -72,6 +46,7 @@ struct ContentView_Previews: PreviewProvider {
      }
  }
  */
+
 
 /*
  struct ContentView: View {
@@ -92,6 +67,7 @@ struct ContentView_Previews: PreviewProvider {
  }
 
  */
+
 
 /*
  struct ContentView: View {
@@ -247,6 +223,103 @@ struct ContentView: View {
        .foregroundColor(.white)
        .clipShape(Circle())
          .rotation3DEffect(.degrees(animationAmount), axis: (x: 0, y: 1, z: 0))
+     }
+ }
+ */
+
+/*
+ struct ContentView: View {
+     @State private var enabled = false
+     @State private var dragAmount = CGSize.zero
+     
+     var body: some View {
+    LinearGradient(gradient: Gradient(colors: [.yellow, .red]), startPoint: .topLeading, endPoint: .bottomTrailing)
+    .frame(width: 300, height: 200)
+    .clipShape(RoundedRectangle(cornerRadius: 10))
+         .offset(dragAmount)
+         .gesture(
+             DragGesture()
+                 .onChanged { self.dragAmount = $0.translation }
+                 .onEnded {  _ in  withAnimation(.spring()) {
+                      self.dragAmount = .zero
+                  } }
+         )
+         //.animation(.spring())
+     }
+ }
+
+ */
+
+/*
+ struct ContentView: View {
+      let letters = Array("Hello SwiftUI")
+      @State private var enabled = false
+      @State private var dragAmount = CGSize.zero
+     
+     var body: some View {
+           HStack(spacing: 0) {
+         ForEach(0..<letters.count) { num in
+             Text(String(self.letters[num]))
+                 .padding(5)
+                 .font(.title)
+                 .background(self.enabled ? Color.blue : Color.red)
+                 .offset(self.dragAmount)
+                 .animation(Animation.default.delay(Double(num) / 20))
+         }
+     }
+     .gesture(
+         DragGesture()
+             .onChanged { self.dragAmount = $0.translation }
+             .onEnded { _ in
+                 self.dragAmount = .zero
+                 self.enabled.toggle()
+             }
+     )
+     }
+ }
+ */
+
+/*
+ struct ContentView: View {
+   @State private var isShowingRed = false
+     
+     var body: some View {
+          VStack {
+               Button("Tap Me") {
+                withAnimation {
+                     self.isShowingRed.toggle()
+                 }
+               }
+
+           if isShowingRed {
+                   Rectangle()
+                       .fill(Color.red)
+                       .frame(width: 200, height: 200)
+                     .transition(.scale)
+               }
+           }
+     }
+ }
+ */
+
+/*
+ struct CornerRotateModifier: ViewModifier {
+     let amount: Double
+     let anchor: UnitPoint
+
+     func body(content: Content) -> some View {
+         content.rotationEffect(.degrees(amount), anchor: anchor).clipped()
+     }
+ }
+ */
+
+/*
+ extension AnyTransition {
+     static var pivot: AnyTransition {
+         .modifier(
+             active: CornerRotateModifier(amount: -90, anchor: .topLeading),
+             identity: CornerRotateModifier(amount: 0, anchor: .topLeading)
+         )
      }
  }
  */
